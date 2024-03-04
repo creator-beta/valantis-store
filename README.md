@@ -1,36 +1,12 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Дорогому ревьюеру
 
-## Getting Started
+Выбор пал в сторону серверной генерации в связи с ограничениями API. Метод `filter` заставил меня немного припотеть: только один входной параметр, отсутствие `offset` и `limit`... Пришлось слайсить массив полученных ID, а после отправлять запрос на получение данных товаров. Плохо, что при фильтрации приходиться получать список всех ID, можно заметить как приложение притормаживает, но всё же это работает и довольно хорошо.
 
-First, run the development server:
+Хочу обратить внимание на то, что при фильтрации нужно заполнять только один из трёх параметров (опять же в связи с ограничениями API). В реальном проекте такого никогда бы не случилось, поэтому в контексте тестового задания _танцевать с бубном_ и подстраиваться под такую логику не стал. Все параметры передаются через URL и отправляются объектом в метод. Ну а дальше, как говорится, победит сильнейший :)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Пагинация дизейблится только на первой странице, так как у API нет метода для получения количества всех товаров. Будь он у мен, было бы проще. Но решил не перегружать приложение лишними запросами. Когда доходишь до последней страницы (а это страница 160, так как товаров 8004), вместо списка, в отсутствии данных выводится заглушка.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Спасибо за проведённое ревью! Если остались вопросы, буду рад ответить в ТГ или через HR.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+**Мой телеграмм:** @kuznetsovcreator
+**Основной GitHub:** /KuznetsovCreator
