@@ -31,13 +31,17 @@ export default async function Home({ searchParams }) {
         <div className="container">
           <div className={Styles["catalog-section__header"]}>
             <h1>Каталог товаров</h1>
-            {data.length && <p>Товаров на странице: {data.length}</p>}
+            {data.length > 0 && <p>Товаров на странице: {data.length}</p>}
           </div>
           <div className={Styles["catalog-section__inner"]}>
             <FilterForm />
-            {data.length ? <ProductsList data={data} /> : <ProductsNotFound />}
+            {data.length > 0 ? (
+              <ProductsList data={data} />
+            ) : (
+              <ProductsNotFound />
+            )}
           </div>
-          {data.length && (
+          {data.length > 0 && (
             <div className={Styles["catalog-section__footer"]}>
               <PagButton
                 isPrev
