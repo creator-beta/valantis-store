@@ -1,0 +1,32 @@
+.header {
+  height: 80px;
+  width: 100%;
+}
+.header__container {
+  height: inherit;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  border-bottom: 1px var(--color-light) solid;
+}
+.nav {
+  height: inherit;
+
+  display: flex;
+}
+.nav__link {
+  height: inherit;
+  min-width: 100px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+}
+.nav__link_active {
+  border-bottom: 1px var(--color-dark) solid;
+}

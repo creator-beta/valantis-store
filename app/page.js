@@ -1,95 +1,62 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import { getProductsData } from "./api/api-utils";
+import { itemsPerPage } from "./api/config";
+import { FilterForm } from "./components/FilterForm/FilterForm";
+import { ProductsList } from "./components/Products/ProductsList";
+import { PagButton } from "./components/PagButton/PagButton";
+import { ProductsNotFound } from "./components/Products/ProductsNotFound";
+import Styles from "./page.module.css";
 
-export default function Home() {
+export default async function Home({ searchParams }) {
+  const page = Number(searchParams?.page) || 1;
+  const filters = {
+    price:
+      searchParams?.price !== undefined
+        ? Number(searchParams.price) || 0
+        : undefined,
+    product:
+      searchParams?.product !== undefined
+        ? decodeURIComponent(searchParams.product) || ""
+        : undefined,
+    brand:
+      searchParams?.brand !== undefined
+        ? decodeURIComponent(searchParams.brand) || ""
+        : undefined,
+  };
+
+  const data = await getProductsData(page, filters);
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main>
+      <section className={Styles["catalog-section"]}>
+        <div className="container">
+          <div className={Styles["catalog-section__header"]}>
+            <h1>Каталог товаров</h1>
+            {data.length && <p>Товаров на странице: {data.length}</p>}
+          </div>
+          <div className={Styles["catalog-section__inner"]}>
+            <FilterForm />
+            {data.length ? <ProductsList data={data} /> : <ProductsNotFound />}
+          </div>
+          {data.length && (
+            <div className={Styles["catalog-section__footer"]}>
+              <PagButton
+                isPrev
+                isEnd={page === 1}
+                href={{
+                  pathname: "/",
+                  query: { ...searchParams, page: page > 1 ? page - 1 : 1 },
+                }}
+              />
+              <PagButton
+                href={{
+                  pathname: "/",
+                  query: { ...searchParams, page: page + 1 },
+                }}
+              />
+            </div>
+          )}
         </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      </section>
     </main>
   );
 }
