@@ -30,3 +30,9 @@
 .nav__link_active {
   border-bottom: 1px var(--color-dark) solid;
 }
+
+@media screen and (width <= 375px) {
+  .logo {
+    width: 160px;
+  }
+}

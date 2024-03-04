@@ -11,7 +11,13 @@ export const NavBar = () => {
   return (
     <header className={Styles["header"]}>
       <div className={`container ${Styles["header__container"]}`}>
-        <Image src="./logo.svg" alt="Valantis" width={200} height={40} />
+        <Image
+          src="./logo.svg"
+          alt="Valantis"
+          width={200}
+          height={40}
+          className={Styles["logo"]}
+        />
         <nav className={Styles["nav"]}>
           <Link
             href="/"

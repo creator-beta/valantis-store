@@ -21,3 +21,25 @@
   align-items: center;
   column-gap: 10px;
 }
+
+@media screen and (width <= 768px) {
+  .catalog-section__inner {
+    grid-template-columns: 250px auto;
+  }
+}
+
+@media screen and (width <= 550px) {
+  .catalog-section__header {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 30px;
+  }
+  .catalog-section__inner {
+    grid-template-columns: 1fr;
+    row-gap: 60px;
+  }
+  .catalog-section__footer {
+    justify-content: center;
+  }
+}

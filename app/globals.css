@@ -75,3 +75,14 @@ input:hover,
 input:focus {
   border: 1px var(--color-dark) solid;
 }
+
+@media screen and (width <= 1090px) {
+  .container {
+    padding: 0 15px;
+  }
+}
+@media screen and (width <= 550px) {
+  h1 {
+    margin-bottom: 5px;
+  }
+}
